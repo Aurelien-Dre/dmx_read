@@ -14,6 +14,7 @@ use embassy_stm32::{
     peripherals::{self},
     usart::{self, BufferedUart, Config, StopBits},
 };
+use embassy_time::Timer;
 use embedded_io_async::{Read, Write};
 //------------Imports-----------
 
@@ -28,8 +29,8 @@ async fn main(_spawner: Spawner) {
     let p = embassy_stm32::init(Default::default());
 
     //------------USART initialisation-----------
-    let mut tx_buffer = [0u8; 50];
-    let mut rx_buffer = [0u8; 15];
+    let mut tx_buffer = [0u8; 513];
+    let mut rx_buffer = [0u8; 1000];
 
     let mut config = Config::default();
     config.baudrate = 250000;
@@ -48,21 +49,14 @@ async fn main(_spawner: Spawner) {
     //------------UART initialisation-----------
 
     //------------Variables-----------
-    let buffer_tx_first: [u8; 10] = [1; 10]; //Buffer to store the first frame
-    let buffer_tx_second: [u8; 10] = [2; 10]; //Buffer to store a second frame
-    let mut buffer_rx: [u8; 10] = [0; 10]; //Buffer to store the result frame
-                                           //------------Variables-----------
+    let mut buffer_tx_first: [u8; 1] = [1; 1]; //Buffer to store the first frame
+    let buffer_tx_second: [u8; 2] = [2; 2]; //Buffer to store a second frame
+    let mut buffer_rx: [u8; 513] = [0; 513]; //Buffer to store the result frame
+                                             //------------Variables-----------
 
-    //first read cycle
-    let _ = serial.write(&buffer_tx_first).await;
-    let a = serial.read(&mut buffer_rx).await; //fill the 10 first slots of the DMA
-
-    //second read cycle
-    let _ = serial.write(&buffer_tx_second).await;
-    let b = serial.read(&mut buffer_rx).await; //is blocked by the maximal size of the dma and only return 5 numbers form the second buffer
-
-    //print the buffer_rx for debug
-    let _ = serial.write(&buffer_rx).await;
-    info!("{} and {} bits have been readen", a.unwrap(), b.unwrap());
-    loop {}
+    loop {
+        let _ = serial.read(&mut buffer_tx_first).await;
+        let _ = serial.read_exact(&mut buffer_rx).await;
+        let _ = serial.write(&buffer_rx).await;
+    }
 }

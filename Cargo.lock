@@ -571,6 +571,7 @@ checksum = "b4ce301924b7887e9d637144fdade93f9dfff9b60981d4ac161db09720d39aa5"
 name = "main"
 version = "0.1.0"
 dependencies = [
+ "byteorder",
  "cortex-m",
  "cortex-m-rt",
  "defmt 1.0.1",
@@ -580,9 +581,24 @@ dependencies = [
  "embassy-stm32",
  "embassy-sync 0.7.0",
  "embassy-time",
+ "embedded-io",
  "embedded-io-async",
+ "micropb",
+ "never",
  "panic-halt",
  "panic-probe",
+ "thiserror",
+]
+
+[[package]]
+name = "micropb"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bff8c16c9fb4b03e9b23e0bc17ce3b67465c3f0f75a004a65d604d382c13b7bd"
+dependencies = [
+ "heapless",
+ "never",
+ "num-traits",
 ]
 
 [[package]]
@@ -599,6 +615,12 @@ name = "nb"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8d5439c4ad607c3c23abf66de8c8bf57ba8adcd1f129e699851a6e43935d339d"
+
+[[package]]
+name = "never"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c96aba5aa877601bb3f6dd6a63a969e1f82e60646e81e71b14496995e9853c91"
 
 [[package]]
 name = "num-traits"

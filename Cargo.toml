@@ -28,6 +28,19 @@ embassy-time = { version = "0.4.0", features = ["tick-hz-32_768"] }
 panic-halt = "1.0.0"
 panic-probe = { version = "1.0.0", features = ["print-defmt"], optional = true }
 embedded-io-async = "0.6.1"
+
+
+embedded-io = "0.6.1"
+never = { version = "0.1.0", default-features = false }
+thiserror = { version = "2.0.12", default-features = false }
+
+micropb = { version = "0.1.1", default-features = false, features = [
+    "encode",
+    "decode",
+    "container-heapless",
+] }
+byteorder = { version = "1.5.0", default-features = false }
+
 [[bin]]
 name = "main"
 test = false
